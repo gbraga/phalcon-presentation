@@ -1,0 +1,75 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["users/index", "Voltar"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["users/new", "Adicionar Usuário "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Resultados da Busca</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Nickname</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $user): ?>
+            <tr>
+                <td><?php echo $user->id ?></td>
+                <td><?php echo $user->name ?></td>
+                <td><?php echo $user->nick_name ?></td>
+
+                <td><?php echo $this->tag->linkTo(["users/edit/" . $user->id, "Editar"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["users/delete/" . $user->id, "Deletar"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li class="m-1">
+                    <?php echo $this->tag->linkTo("users/search", " << ") ?>
+                </li>
+                <li class="m-1">
+                    <?php echo $this->tag->linkTo("users/search?page=" . $page->before, " < ") ?>
+                </li>
+                <li class="m-1">
+                    <?php echo $this->tag->linkTo("users/search?page=" . $page->next, " > ") ?>
+                </li>
+                <li class="m-1">
+                    <?php echo $this->tag->linkTo("users/search?page=" . $page->last, " >> ") ?>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
